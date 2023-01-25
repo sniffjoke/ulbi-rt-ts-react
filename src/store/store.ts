@@ -1,4 +1,9 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {
+    // AnyAction,
+    combineReducers,
+    configureStore,
+    // ThunkDispatch
+} from "@reduxjs/toolkit";
 import userReducer from './reducers/UserSlice'
 
 const rootReducer = combineReducers({
@@ -13,4 +18,5 @@ export const setupStore = () => {
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof setupStore>
-export type AppDispatch = AppStore['dispatch']
+export type AppDispatch = AppStore['dispatch'];
+// export type Dispatcher = ThunkDispatch<RootState, undefined, AnyAction>

@@ -1,19 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {useAppDispatch, useAppSelector} from "./hooks/redux";
-import {userSlice} from "./store/reducers/UserSlice";
+import {fetchUsers} from "./store/reducers/ActionCreators";
+import {AppDispatch} from "./store/store";
 
 function App() {
-    const {count} = useAppSelector(state => state.userReducer)
-    const {increment} = userSlice.actions
-    const dispacth = useAppDispatch()
+    const dispatch:AppDispatch = useAppDispatch()
+    const {users, isLoading, error} = useAppSelector(state => state.userReducer)
+
+    useEffect(() => {
+        dispatch(fetchUsers())
+    }, [])
 
   return (
     <div className="App">
-      <h1>{count}</h1>
-        <button onClick={() => dispacth(increment(1))}>
-            INCREMENT
-        </button>
+        {isLoading && <h1>Идет загрузка...</h1>}
+        {error && <h1>{error}</h1>}
+        {JSON.stringify(users, null, 2)}
     </div>
   );
 }
