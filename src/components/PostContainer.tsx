@@ -10,6 +10,8 @@ const PostContainer = () => {
         // pollingInterval: 1000
     // }
     )
+    const [deletePost, {}] = postAPI.useDeletePostMutation()
+    const [updatePost, {}] = postAPI.useUpdatePostMutation()
 
     const [createPost, {error: createError}] = postAPI.useCreatePostMutation()
 
@@ -17,6 +19,14 @@ const PostContainer = () => {
         const title = prompt()
         await createPost({title, body: title} as IPost)
 
+    }
+
+    const handleRemove = (post: IPost) => {
+        deletePost(post)
+    }
+
+    const handleUpdate = (post: IPost) => {
+        updatePost(post)
     }
 
     return (
@@ -27,7 +37,7 @@ const PostContainer = () => {
                 {isLoading && <h1>Идет загрузка...</h1>}
                 {error && <h1>Произошла ошибка</h1>}
                 {posts && posts.map(post =>
-                    <PostItem key={post.id} post={post}/>
+                    <PostItem remove={handleRemove} update={handleUpdate} key={post.id} post={post}/>
                 )}
             </div>
         </div>
